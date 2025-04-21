@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { LeftSidebar } from "./sidebar/left-sidebar";
 import { RightSidebar } from "./sidebar/right-sidebar";
+import { BottomNav } from "./nav/bottom-nav";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -8,15 +9,27 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="flex min-h-screen bg-background">
-      <div className="fixed left-0 top-0 w-72 h-screen">
-        <LeftSidebar />
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto flex max-w-screen-xl items-start">
+        {/* デスクトップサイドバー */}
+        <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-[275px] lg:flex-col lg:py-4">
+          <LeftSidebar />
+        </div>
+
+        {/* メインコンテンツ */}
+        <main className="flex-1">
+          {children}
+        </main>
+
+        {/* 右サイドバー */}
+        <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-[350px] lg:flex-col lg:py-4">
+          <RightSidebar />
+        </div>
       </div>
-      <div className="flex-1 ml-72 mr-80">
-        {children}
-      </div>
-      <div className="fixed right-0 top-0 w-80 h-screen">
-        <RightSidebar />
+
+      {/* モバイルボトムナビゲーション */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 border-t bg-background z-50">
+        <BottomNav />
       </div>
     </div>
   );
